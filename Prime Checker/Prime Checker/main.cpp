@@ -40,10 +40,9 @@ int main() {
         int range = limit / threadCount;
         int start = i * range + 2;
         int end = start + range - 1;
-        
 
         if (i == threadCount - 1) {
-            end = limit + 1;
+            end = limit;
         }
 
         threads.push_back(std::thread(primesCheck, start, end, 
@@ -75,7 +74,7 @@ void primesCheck(int start, int end, std::vector<int>& primes,
     }
 }
 
-bool check_prime(const int& num) {
+bool check_prime(const int& num) {    
     for (int i = 2; i * i <= num; i++) {
         if (num % i == 0) {
             return false;

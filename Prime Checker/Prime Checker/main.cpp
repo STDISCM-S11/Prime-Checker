@@ -30,8 +30,6 @@ int main() {
     std::cout << "Enter the number of threads: ";
     std::cin >> threadCount;
 
-    const int numThreads = threadCount;
-
     std::vector<int> primes;
     std::vector<std::thread> threads;
     std::mutex mutex;
@@ -39,12 +37,15 @@ int main() {
     auto start_time = std::chrono::high_resolution_clock::now();
 
     for (int i = 0; i < threadCount; i++) {
-        int start = i * (LIMIT / threadCount) + 2;
-        int end = (LIMIT / threadCount) * (i + 1) + 2;
+        int range = limit / threadCount;
+        int start = i * range + 2;
+        int end = start + range - 1;
+        
 
         if (i == threadCount - 1) {
-            end = LIMIT + 1;
+            end = limit + 1;
         }
+
         threads.push_back(std::thread(primesCheck, start, end, 
             std::ref(primes), std::ref(mutex)));
     }
